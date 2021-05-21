@@ -72,12 +72,11 @@ export const addComment = (data: any) => async (dispatch: any) => {
 
 export const signup = (user: any) => async (dispatch: any) => {
   const result = await post("users", user);
-
-  dispatch({
-    type: SIGNUP,
-    payload: result && result.data,
-  });
-  return result.data;
+  const { error } = result?.data;
+  if (error) {
+    return { succes: false, label: error.message };
+  }
+  return { succes: true, label: "" };
 };
 
 export const logout = () => async (dispatch: any) => {
