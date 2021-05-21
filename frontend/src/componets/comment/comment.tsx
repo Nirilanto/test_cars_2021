@@ -8,6 +8,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TimeAgo from "react-timeago";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import mapDispatchToProps from "../../redux/mapDispatchToProps";
 import mapStateToProps from "../../redux/mapStateToProps";
@@ -26,7 +28,7 @@ const Comment = (props: any) => {
   let history = useHistory();
   const [listComments, setListComments] = useState([]);
   const [data, setData] = useState("");
-  const { cars, id, getAllCars, addComment, me, comments, getAllComment } =
+  const { cars, id, addComment, me, comments, getAllComment, deleteComment } =
     props;
   const [current, setCurret] = useState<any>({});
   const { name } = current ?? {};
@@ -71,23 +73,37 @@ const Comment = (props: any) => {
     setData(elem.target.value);
   };
 
+  const handleDeleteCmt = async (elem: string) => {
+    await deleteComment(elem);
+    getAllComment();
+  };
+
   return (
     <div style={{ padding: 14 }} className="App">
-      <CardComment {...current} />
+      <CardComment {...props} />
       <h1>Comments</h1>
       {me?.id ? (
         <Paper style={{ padding: "40px 20px" }}>
           {listComments?.map((item: any) => {
             const { body, users, date } = item;
+            let itMe = me?.id == item.users.id;
             return (
               <div>
                 <Grid container wrap="nowrap" spacing={2}>
                   <Grid item>
-                    <Avatar >{users?.name[0].toUpperCase()}</Avatar>
+                    <Avatar>{users?.name[0].toUpperCase()}</Avatar>
                   </Grid>
                   <Grid justify="flex-start" item xs zeroMinWidth>
                     <h4 style={{ margin: 0, textAlign: "left" }}>
-                      {users?.name}
+                      {`${users?.name} ${itMe ? "(You)" : ""}`}
+                      {itMe && (
+                        <IconButton
+                          onClick={() => handleDeleteCmt(item.id)}
+                          aria-label="delete"
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      )}
                     </h4>
                     <p style={{ textAlign: "left" }}>{body}</p>
                     <p style={{ textAlign: "left", color: "gray" }}>

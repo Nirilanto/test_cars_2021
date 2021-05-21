@@ -1,5 +1,12 @@
 import {repository} from '@loopback/repository';
-import {post, get, getModelSchemaRef, requestBody} from '@loopback/rest';
+import {
+  post,
+  get,
+  getModelSchemaRef,
+  requestBody,
+  param,
+  del,
+} from '@loopback/rest';
 import {Comment} from '../models';
 import {CommentRepository} from '../repositories';
 import {authenticate} from '@loopback/authentication';
@@ -53,5 +60,17 @@ export class CommentController {
   @authenticate('jwt')
   async find(): Promise<Comment[]> {
     return this.commentRepository.find();
+  }
+
+  @del('/comment/{id}', {
+    responses: {
+      '204': {
+        description: 'Cars DELETE success',
+      },
+    },
+  })
+  @authenticate('jwt')
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.commentRepository.deleteById(id);
   }
 }

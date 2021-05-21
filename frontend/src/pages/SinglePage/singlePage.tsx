@@ -12,11 +12,12 @@ import Comment from "../../componets/comment/comment";
 
 const SinglePage = (props: any) => {
   const classes = useStyles();
-  const { cars, getAllComment, logout, me , currentUser} = props;
+  const { getAllCars, getAllComment, logout, me , currentUser} = props;
 
   useEffect(() => {
     currentUser()
     getAllComment();
+    getAllCars();
   }, []);
 
   return (

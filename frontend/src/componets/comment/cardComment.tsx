@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -17,7 +18,15 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard(props: any) {
-  const { type, abut, name } = props;
+  const [current, setCurret] = useState<any>({});
+  const { cars, id } = props;
+  const {name, type, abut }= current || {}
+  
+  useEffect(() => {
+    let news = cars.find((i: any) => i.name?.trim() == id);
+    setCurret(news);
+  }, [id, cars]);
+
   const classes = useStyles();
 
   return (

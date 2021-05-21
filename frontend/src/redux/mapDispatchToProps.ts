@@ -5,7 +5,8 @@ import {
   currentUser,
   addComment,
   getAllComment,
-  signup
+  signup,
+  deleteComment
 } from "./actions/usersAction";
 import { getAllCars } from "./actions/carsAction";
 
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   currentUser: () => dispatch(currentUser()),
   addComment: (data: any) => dispatch(addComment(data)),
   getAllComment: () => dispatch(getAllComment()),
+  deleteComment: (id: string) => dispatch(deleteComment(id)),
 });
 
 export default mapDispatchToProps;
