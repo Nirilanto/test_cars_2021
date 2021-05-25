@@ -9,15 +9,16 @@ import {
   deleteComment
 } from "./actions/usersAction";
 import { getAllCars } from "./actions/carsAction";
+import { IUser, IComment} from "src/redux/types"
 
 const mapDispatchToProps = (dispatch: any) => ({
   getAllUser: () => dispatch(getAllUser()),
   getAllCars: () => dispatch(getAllCars()),
-  login: (user: any) => dispatch(login(user)),
-  signup: (user: any) => dispatch(signup(user)),
+  login: (user: IUser) => dispatch(login(user)),
+  signup: (user: IUser) => dispatch(signup(user)),
   logout: () => dispatch(logout()),
   currentUser: () => dispatch(currentUser()),
-  addComment: (data: any) => dispatch(addComment(data)),
+  addComment: (comment: IComment) => dispatch(addComment(comment)),
   getAllComment: () => dispatch(getAllComment()),
   deleteComment: (id: string) => dispatch(deleteComment(id)),
 });

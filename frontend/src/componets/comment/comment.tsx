@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Divider, Avatar, Grid, Paper, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -14,6 +14,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import mapDispatchToProps from "../../redux/mapDispatchToProps";
 import mapStateToProps from "../../redux/mapStateToProps";
 import CardComment from "./cardComment";
+import { IComment, IProps } from "src/redux/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Comment = (props: any) => {
+interface Props extends IProps {
+  id?: string;
+}
+
+const Comment = (props: Props) => {
   const classes = useStyles();
   let history = useHistory();
   const [listComments, setListComments] = useState([]);
@@ -41,14 +46,14 @@ const Comment = (props: any) => {
   }, []);
 
   useEffect(() => {
-    let currCmt =
+    let currCmt: any =
       comments &&
-      comments.filter((i: any) => i.cars?.name?.trim() == name?.trim());
+      comments.filter((i: any) => i.cars?.name?.trim() === name?.trim());
     setListComments(currCmt);
   }, [comments]);
 
   useEffect(() => {
-    let news = cars.find((i: any) => i.name?.trim() == id);
+    let news = cars?.find((i: any) => i.name?.trim() === id);
     setCurret(news);
   }, [id, cars]);
 
@@ -73,7 +78,7 @@ const Comment = (props: any) => {
     setData(elem.target.value);
   };
 
-  const handleDeleteCmt = async (elem: string) => {
+  const handleDeleteCmt = async (elem: string | undefined) => {
     await deleteComment(elem);
     getAllComment();
   };
@@ -84,21 +89,21 @@ const Comment = (props: any) => {
       <h1>Comments</h1>
       {me?.id ? (
         <Paper style={{ padding: "40px 20px" }}>
-          {listComments?.map((item: any) => {
+          {listComments?.map((item: IComment) => {
             const { body, users, date } = item;
-            let itMe = me?.id == item.users.id;
+            let itMe = me?.id === item?.users?.id;
             return (
               <div>
                 <Grid container wrap="nowrap" spacing={2}>
                   <Grid item>
-                    <Avatar>{users?.name[0].toUpperCase()}</Avatar>
+                    <Avatar>{users?.name[0]?.toUpperCase()}</Avatar>
                   </Grid>
                   <Grid justify="flex-start" item xs zeroMinWidth>
                     <h4 style={{ margin: 0, textAlign: "left" }}>
                       {`${users?.name} ${itMe ? "(You)" : ""}`}
                       {itMe && (
                         <IconButton
-                          onClick={() => handleDeleteCmt(item.id)}
+                          onClick={() => handleDeleteCmt(item?.id)}
                           aria-label="delete"
                         >
                           <DeleteIcon fontSize="small" />

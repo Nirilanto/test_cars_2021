@@ -9,8 +9,9 @@ import useStyles from "./singlePageStyle";
 import Footer from "../../componets/footer";
 import Header from "../../componets/header";
 import Comment from "../../componets/comment/comment";
+import { IProps } from "src/redux/types";
 
-const SinglePage = (props: any) => {
+const SinglePage = (props: IProps) => {
   const classes = useStyles();
   const { getAllCars, getAllComment, logout, me , currentUser} = props;
 

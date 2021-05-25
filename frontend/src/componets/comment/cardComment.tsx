@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+
+import CONFIG from "src/configs/configs.json";
+import { ICars, IProps} from "src/redux/types"
 
 const useStyles = makeStyles({
   root: {
@@ -17,13 +18,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard(props: any) {
+interface Props extends IProps {
+  id?:string;
+}
+
+export default function MediaCard(props: Props) {
   const [current, setCurret] = useState<any>({});
   const { cars, id } = props;
-  const {name, type, abut }= current || {}
-  
+  const { name, type, abut } = current || {};
+
   useEffect(() => {
-    let news = cars.find((i: any) => i.name?.trim() == id);
+    let news = cars?.find((i: ICars) => i.name?.trim() === id);
     setCurret(news);
   }, [id, cars]);
 
@@ -34,7 +39,7 @@ export default function MediaCard(props: any) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={`/static/${name?.trim()}.jpg`}
+          image={`${CONFIG.URL_IMAGE + name?.trim()}.jpg`}
           title="Contemplative Reptile"
         />
         <CardContent>

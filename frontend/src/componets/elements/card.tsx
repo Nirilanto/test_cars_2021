@@ -8,6 +8,9 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 
+import CONFIG from "src/configs/configs.json";
+import { IProps } from "src/redux/types";
+
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -44,7 +47,7 @@ const CardElement = (props: Props) => {
       <Card className={classes.card}>
         <CardMedia
           className={classes.cardMedia}
-          image={`/static/${name.trim()}.jpg`}
+          image={`${CONFIG.URL_IMAGE + name?.trim()}.jpg`}
           title={mark}
         />
         <CardContent className={classes.cardContent}>

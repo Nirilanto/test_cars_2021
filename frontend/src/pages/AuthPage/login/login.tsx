@@ -13,14 +13,14 @@ import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
 
-import mapDispatchToProps from "../../../redux/mapDispatchToProps";
-import mapStateToProps from "../../../redux/mapStateToProps";
+import mapDispatchToProps from "src/redux/mapDispatchToProps";
+import mapStateToProps from "src/redux/mapStateToProps";
 import useStyles from "./loginStyle";
-import Copyright from "../../../componets/elements/copyright";
-import AuthService from "../../../services/AuthService";
+import Copyright from "src/componets/elements/copyright";
+import AuthService from "src/services/AuthService";
 
 const LoginPage = (props: any) => {
-  const { users, login } = props;
+  const { login } = props;
   let history = useHistory();
   const classes = useStyles();
   const [data, setData] = useState({});

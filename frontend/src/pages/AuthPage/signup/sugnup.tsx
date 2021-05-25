@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -26,7 +26,7 @@ const SingupPage = (props: any) => {
   const [data, setData] = useState({});
   const [pwConf, setPwConf] = useState("");
 
-  let isSamePw = Object.assign({ ...data }).password == pwConf;
+  let isSamePw = Object.assign({ ...data }).password === pwConf;
 
   function checkAuth() {
     AuthService.isAuthenticated() && history.push("/");
